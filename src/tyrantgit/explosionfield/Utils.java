@@ -43,6 +43,7 @@ public class Utils {
                 return ((BitmapDrawable) drawable).getBitmap();
             }
         }
+        // changeable if it got focus.
         view.clearFocus();
         Bitmap bitmap = createBitmapSafely(view.getWidth(),
                 view.getHeight(), Bitmap.Config.ARGB_8888, 1);

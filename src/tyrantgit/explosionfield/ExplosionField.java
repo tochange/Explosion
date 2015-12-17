@@ -24,6 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -66,10 +67,12 @@ public class ExplosionField extends View {
         }
     }
 
-    public void expandExplosionBound(int dx, int dy) {
-        mExpandInset[0] = dx;
-        mExpandInset[1] = dy;
-    }
+    
+//    public void expandExplosionBound(int dx, int dy) {
+//    	Log.e("yangxj","....");
+//        mExpandInset[0] = dx;
+//        mExpandInset[1] = dy;
+//    }
 
     public void explode(Bitmap bitmap, Rect bound, long startDelay, long duration) {
         final ExplosionAnimator explosion = new ExplosionAnimator(this, bitmap, bound);
@@ -92,16 +95,17 @@ public class ExplosionField extends View {
         getLocationOnScreen(location);
         r.offset(location[0], -location[1]);
         r.inset(-mExpandInset[0], -mExpandInset[1]);
-        int startDelay = 100;
-        ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f).setDuration(150);
+        int startDelay = 100; // shaking time
+        final float spanFactor = 0.1f;
+        ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f).setDuration((int)(startDelay * 1.5));
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
             Random random = new Random();
 
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                view.setTranslationX((random.nextFloat() - 0.5f) * view.getWidth() * 0.05f);
-                view.setTranslationY((random.nextFloat() - 0.5f) * view.getHeight() * 0.05f);
+                view.setTranslationX((random.nextFloat() - 0.5f) * view.getWidth() * spanFactor);
+                view.setTranslationY((random.nextFloat() - 0.5f) * view.getHeight() * spanFactor);
 
             }
         });

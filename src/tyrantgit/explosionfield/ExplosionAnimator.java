@@ -43,8 +43,8 @@ public class ExplosionAnimator extends ValueAnimator {
 
     public ExplosionAnimator(View container, Bitmap bitmap, Rect bound) {
         mPaint = new Paint();
-        mBound = new Rect(bound);
-        int partLen = 15;
+        mBound = new Rect(bound); // explosion range?
+        int partLen = 15; // particle count?
         mParticles = new Particle[partLen * partLen];
         Random random = new Random(System.currentTimeMillis());
         int w = bitmap.getWidth() / (partLen + 2);
